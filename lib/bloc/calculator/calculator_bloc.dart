@@ -15,15 +15,15 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
   ) async* {
     // Borrar todo
     if (event is ResetAC) {
-      // aca no use el this.
-      yield* _resetAC();
+      yield* _resetAC(); // aca no use el this.
       // Agregar numeros
     } else if (event is AddNumber) {
       yield state.copyWith(
         mathResult: (state.mathResult == '0' && event.number != '.')
-            // que no se repitan los puntos
             ? event.number
-            : state.mathResult + event.number,
+            : (state.mathResult.contains('.') && event.number == '.')
+                ? state.mathResult
+                : state.mathResult + event.number,
       );
       // Cambiar -/+
     } else if (event is ChangeNegativePositive) {
@@ -71,7 +71,24 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
           secondNumber: state.mathResult,
           mathResult: '${num1 + num2}',
         );
-
+        break;
+      case '-':
+        yield state.copyWith(
+          secondNumber: state.mathResult,
+          mathResult: '${num1 - num2}',
+        );
+        break;
+      case '*':
+        yield state.copyWith(
+          secondNumber: state.mathResult,
+          mathResult: '${num1 * num2}',
+        );
+        break;
+      case '/':
+        yield state.copyWith(
+          secondNumber: state.mathResult,
+          mathResult: '${num1 / num2}',
+        );
         break;
 
       default:

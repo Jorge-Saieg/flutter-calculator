@@ -38,7 +38,7 @@ class CalculatorScreen extends StatelessWidget {
                   onPressed: () => calculatorBloc.add(DeleteLastEntry()),
                 ),
                 CalculatorButton(
-                  text: '/',
+                  text: '÷',
                   bgColor: Color(0xffF0A23B),
                   onPressed: () => calculatorBloc.add(OperationEntry('/')),
                 ),
